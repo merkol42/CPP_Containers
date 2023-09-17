@@ -13,7 +13,7 @@
 void	print_instructions(std::string instruction);
 void	print_title(std::string title);
 void	print_subheading(std::string subheading);
-void	print_vector(const std::vector<int>& vec, char sep);
+void	print_vector(const std::vector<int>& vec, char sep = ' ');
 
 #include "auxiliary.cpp"
 #endif

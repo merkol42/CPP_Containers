@@ -36,7 +36,7 @@ namespace merkol
 		"Bir nesnenin tamamen oluşturulmuş temel sınıfları ve üyeleri,
 		o blok için bir yapıcı veya yıkıcının işlev deneme bloğunun işleyicisine girmeden önce yok edilmelidir."
 	*/
-	template <typename T, typename Allocator = std::allocator<T> >
+	template <typename T, typename Allocator>
 	struct vectorBase
 	{
 		typedef Allocator			allocator_type;
@@ -45,9 +45,6 @@ namespace merkol
 	
 		static const size_type npos		= (size_type)-1; // 'npos' means non-valid position or simply non-position.
 		static const size_type kMaxSize	= (size_type)-2; // -1 is reserved for 'npos'. It also happens to be slightly beneficial that kMaxSize is a value less than -1, as it helps us deal with potential integer wraparound issues.
-
-		static const size_type maxx = __gnu_cxx::__numeric_traits<size_type>::__max / sizeof(T);
-		size_type alloc_max = mCapacityAllocator.second.max_size();
 
 		size_type getNewCapacity(size_type currentCapacity);
 	protected:
@@ -62,7 +59,7 @@ namespace merkol
 
 	public:
 		vectorBase();
-		// vectorBase(const allocator_type& allocator); default same process
+		vectorBase(const allocator_type& allocator);
 		vectorBase(size_type n, const allocator_type& allocator);
 
 		~vectorBase();
@@ -74,12 +71,52 @@ namespace merkol
 	protected:
 		T*		doAllocate(size_type n);
 		void	doFree(T* p, size_type n);
-	};
+	}; // vectorBase
 	
+
+	/**
+	 * @brief vector
+	 * Implements a dynamic array.
+	 * 
+	 * @tparam T value type
+	 * @tparam Allocator allocator type
+	 */
+	template <typename T, typename Allocator = std::allocator<T> >
+	class vector : public vectorBase<T, Allocator>
+	{
+		typedef	vectorBase<T, Allocator>	base_type;
+		typedef	vector<T, Allocator>		this_type;
+	
+	// protected: std >= c++11 
+	// 	using base_type::mpBegin;
+	// 	using base_type::mpEnd;
+	// 	using base_type::mCapacityAllocator;
+	// 	using base_type::DoAllocate;
+	// 	using base_type::DoFree;
+	// 	using base_type::internalCapacityPtr;
+	// 	using base_type::internalAllocator;
+	public:
+		typedef T														value_type;
+		typedef T*														pointer;
+		typedef const T*												const_pointer;
+		typedef T&														referance;
+		typedef const T&												const_referance;
+		// after iterator implementation
+		// typedef merkol::random_access_iterator<value_type>				iterator;
+		// typedef const merkol::random_access_iterator<const value_type>	const_iterator;
+		// typedef merkol::reverse_iterator<iterator>						reverse_iterator;
+		// typedef const merkol::reverse_iterator<const_iterator>			const_reverse_iterator;
+		typedef typename base_type::size_type							size_type;
+		typedef typename base_type::difference_type						difference_type;
+		typedef typename base_type::allocator_type						allocator_type; // || tt Allocator allocator_type;
+	};
+
+
+
 
 
 	///////////////////////////////////////////////////////////////////////
-	// VectorBase
+	// VectorBase.imp.begin();
 	///////////////////////////////////////////////////////////////////////
 
 	template<typename T, typename Allocator>
@@ -90,6 +127,16 @@ namespace merkol
 		mCapacityAllocator(NULL, Allocator())
 	{
 	}
+
+	template<typename T, typename Allocator>
+	inline vectorBase<T, Allocator>::vectorBase(const allocator_type& allocator)
+		: 
+		mpBegin(NULL),
+		mpEnd(NULL),
+		mCapacityAllocator(NULL, allocator)
+	{
+	}
+
 
 	template<typename T, typename Allocator>
 	inline vectorBase<T, Allocator>::vectorBase(size_type n, const allocator_type& allocator)
@@ -130,13 +177,13 @@ namespace merkol
 	template<typename T, typename Allocator>
 	inline T* vectorBase<T, Allocator>::doAllocate(size_type n)
 	{
-		if (n > maxx)
-			throw std::length_error("vectorBase::doAllocate -- requested size exceeds max_size");
+		if (n > internalAllocator().max_size())
+			throw std::length_error("merkol::vector -- requested size exceeds max_size()");
 		if (n)
 		{
 			T*	ptr = internalAllocator().allocate(n * sizeof(T));
 			if (!ptr)
-				throw std::runtime_error("vectorBase::doAllocate -- memory allocation failed");
+				throw std::runtime_error("merkol::vector -- memory allocation failed");
 			return ptr;
 		}
 		return NULL;
@@ -155,7 +202,11 @@ namespace merkol
 	{
 		return (currentCapacity > 0) ? (currentCapacity * 2) : 1;
 	}
+
+	///////////////////////////////////////////////////////////////////////
+	// VectorBase.imp.end();
+	///////////////////////////////////////////////////////////////////////
 } // namespace merkol
 
 
-#endif
+#endif // MYSTL_VECTOR_HPP
