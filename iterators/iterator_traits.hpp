@@ -2,9 +2,36 @@
 # define ITERATORS_TRAITS_HPP
 
 //**stl_iterator_base_types.h line 160**
+#include <typeinfo>
 
 namespace merkol
 {
+	// since CXX17(void_t)
+	// Helper to make iterator_traits SFINAE friendly as N3844 requires.
+	// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3844.pdf
+
+	// template <typename Iterator, class = void>
+	// struct default_iterator_traits {};
+
+	// template <typename Iterator>
+	// struct default_iterator_traits<
+	// 	Iterator,
+	// 	void_t<
+	// 		typename Iterator::iterator_category,
+	// 		typename Iterator::value_type,
+	// 		typename Iterator::difference_type,
+	// 		typename Iterator::pointer,
+	// 		typename Iterator::reference
+	// 	>
+	// >
+	// {
+	// 	typedef typename Iterator::iterator_category iterator_category;
+	// 	typedef typename Iterator::value_type        value_type;
+	// 	typedef typename Iterator::difference_type   difference_type;
+	// 	typedef typename Iterator::pointer           pointer;
+	// 	typedef typename Iterator::reference         reference;
+	// };
+
 	template <typename T>
 	struct iterator_traits {
 		typedef typename T::value_type			value_type;
@@ -33,6 +60,7 @@ namespace merkol
 		typedef const T&							reference;
 		typedef std::ptrdiff_t						difference_type;
 	};
+
 } // namespace merkol
 
 #endif
