@@ -6,6 +6,7 @@
 
 namespace merkol
 {
+	
 	// since CXX17(void_t)
 	// Helper to make iterator_traits SFINAE friendly as N3844 requires.
 	// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3844.pdf
