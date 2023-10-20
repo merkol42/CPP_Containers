@@ -17,7 +17,7 @@ namespace merkol
 	// struct iterator base
 	template <typename Category, typename T, typename Distance = std::ptrdiff_t,
 			  typename Pointer = T*, typename Reference = T&>
-	struct iterator
+	struct iterator_base
 	{
 		typedef Category	iterator_category;
 		typedef T			value_type;

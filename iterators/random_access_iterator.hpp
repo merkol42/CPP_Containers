@@ -19,10 +19,26 @@ namespace merkol
 	private:
 		pointer	_pointer;
 	public:
-		random_access_iterator();
-		explicit random_access_iterator(pointer& ref); // avoid implicitly call
-		random_access_iterator(const this_type& instance);
-		~random_access_iterator();
+		random_access_iterator() {};
+		explicit random_access_iterator(pointer& ref) {std::cout << "sa" << std::endl;}; // avoid implicitly call
+		random_access_iterator(const this_type& instance) {std::cout << "cpycons" << std::endl;};
+		~random_access_iterator() {};
+		int zaa;
+		this_type& deneme() {
+			this->_pointer = (int*)42;
+			this->zaa = 42;
+			std::cout << this << std::endl;
+			return *this;
+		}
+
+		void print_values(){
+			std::cout << this->_pointer << ":::" << this->zaa << std::endl;
+		}
+
+		this_type operator=(this_type& a) {
+			std::cout << "sa" << std::endl;
+			return a;
+		}
 
 		random_access_iterator&	operator++(void); // pre-increment
 		random_access_iterator	operator++(int); // post-increment

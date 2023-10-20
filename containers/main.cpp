@@ -51,28 +51,64 @@ std::ostream& operator<<(std::ostream& o, const struct deneme& a) {
 	return o;
 }
 
+void	iterator_traits_test()
+{
+	int arr[] = {1, 2, 3, 4, 5};
+    int* ptr = arr;
+    merkol::iterator_traits<int*>::value_type value;  // Değer türünü almak
+    merkol::iterator_traits<int*>::difference_type diff; // Fark türünü almak
+    merkol::iterator_traits<int*>::iterator_category category; // Iterator kategorisini almak
+    merkol::iterator_traits<int*>::pointer pointer; // İşaretçiyi almak
+    merkol::iterator_traits<int*>::reference reference = arr[2]; // Referansı almak
+
+    // Elde edilen özellikleri yazdıralım.
+    std::cout << "Value Type: " << typeid(value).name() << std::endl;
+    std::cout << "Difference Type: " << typeid(diff).name() << std::endl;
+    std::cout << "Iterator Category: " << typeid(category).name() << std::endl;
+    std::cout << "Pointer Type: " << typeid(pointer).name() << std::endl;
+    std::cout << "Reference Type: " << typeid(reference).name() << std::endl;
+}
+
+template <typename T>
+void	printValue(T val) {
+	std::cout << val << std::endl;
+}
+
 #include <cstddef>
 #include <typeinfo>
+
+
+
 int main()
 {
-	int* sa = nullptr;
+	// iterator_traits_test();
 
-	if (sa == nullptr)
-	{
-		std::cout << "sa\n";
-	}
+	// std::vector<int>::iterator a = std::vector<int>().begin();
+	// std::cout << std::addressof(a) << std::endl;
+	// printValue(a.base());
+	// a += sizeof(int);
+	// std::cout << std::addressof(a) << std::endl;
+	// printValue(a.base());
 
-	std::vector<int> za;
+	// int* sa = nullptr;
 
-	if (za.data() == nullptr)
-	{
-		// throw merkol::InvalidIteratorException<int>();
-		std::cout << "nullptr size: " << sizeof(merkol::nullptr_t) << std::endl;
-		std::cout << typeid(merkol::nullptr_t).name() << std::endl;
-	}
+	// if (sa == nullptr)
+	// {
+	// 	std::cout << "sa\n";
+	// }
 
-	std::cout << merkol::is_my_iterator_tagged<merkol::input_iterator_tag>::value << std::endl;
-	std::cout << merkol::is_my_iterator_tagged<std::input_iterator_tag>::value << std::endl;
+	// std::vector<int> za;
+
+	// if (za.data() == nullptr)
+	// {
+	// 	// throw merkol::InvalidIteratorException<int>();
+	// 	std::cout << "nullptr size: " << sizeof(merkol::nullptr_t) << std::endl;
+	// 	std::cout << typeid(merkol::nullptr_t).name() << std::endl;
+	// }
+
+	// std::cout << merkol::is_my_iterator_tagged<merkol::input_iterator_tag>::value << std::endl;
+	// std::cout << merkol::is_my_iterator_tagged<std::input_iterator_tag>::value << std::endl;
+
 
 
 	// std::cout << typeid(std::iterator_traits<std::vector<int>::iterator>::iterator_category).name() << std::endl;
