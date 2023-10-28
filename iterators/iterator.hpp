@@ -15,6 +15,7 @@ namespace merkol
 	// struct contiguous_iterator_tag		: public random_access_iterator_tag { }; // CXX20
 
 	// struct iterator base
+    // I didn't use iterator_base because it was removed in c++11
 	template <typename Category, typename T, typename Distance = std::ptrdiff_t,
 			  typename Pointer = T*, typename Reference = T&>
 	struct iterator_base

@@ -23,6 +23,7 @@ namespace merkol
 	private:
 		// It's impossible to get an adress of a nullptr
 		void operator&() const {}
+		
 	};
 } // namespace merkol
 

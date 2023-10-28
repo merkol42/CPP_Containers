@@ -41,6 +41,7 @@ namespace merkol
 		typedef typename T::reference			reference;
 	};
 
+	// Partial specialization for pointer types.
 	template <typename T>
 	struct iterator_traits<T*>
 	{
@@ -51,6 +52,7 @@ namespace merkol
 		typedef std::ptrdiff_t					difference_type;
 	};
 
+	// Partial specialization for const pointer types.
 	template <typename T>
 	struct iterator_traits<const T*>
 	{

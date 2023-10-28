@@ -37,18 +37,15 @@
 #include "../iterators/random_access_iterator.hpp"
 #include "../iterators/iterator_traits.hpp"
 #include "../aux_templates/nullptr.hpp"
+#include "../iterators/iterator.hpp"
+#include <typeinfo>
+#include <cstddef>
 #include <typeinfo>
 
-#include "../iterators/iterator.hpp"
-struct deneme
-{
-	int a;
-	int	b;
-}deneme = {42, 16};
 
-std::ostream& operator<<(std::ostream& o, const struct deneme& a) {
-	o << deneme.a << std::endl << deneme.b;
-	return o;
+template <typename T>
+void	printValue(T val) {
+	std::cout << val << std::endl;
 }
 
 void	iterator_traits_test()
@@ -69,18 +66,38 @@ void	iterator_traits_test()
     std::cout << "Reference Type: " << typeid(reference).name() << std::endl;
 }
 
-template <typename T>
-void	printValue(T val) {
-	std::cout << val << std::endl;
+
+void vector_iter_test() {
+	int *ptr = new int();
+	merkol::random_access_iterator<int> it1(ptr);
+	merkol::random_access_iterator<int> it2;
+
+	std::vector<int> vec;
+	std::vector<int> vec1;
+
+	std::cout << (vec == vec1) << std::endl;
+
+	std::vector<int>::iterator it = vec.begin();
+
+	std::cout << it1.base() << "      " << it2.base() << std::endl;
+	if (it2.base() == nullptr) {
+		std::cout << "operator==" << std::endl;
+	}
+
+	if (ptr != nullptr)
+	{
+		printValue("içerdema");
+	}
+
+	if (it1 > it2)
+		std::cout << "operator>" << std::endl;
 }
-
-#include <cstddef>
-#include <typeinfo>
-
-
 
 int main()
 {
+	vector_iter_test();
+	// typeid(merkol::iterator_traits<decltype(it)>::value_type).name();
+
 	// iterator_traits_test();
 
 	// std::vector<int>::iterator a = std::vector<int>().begin();
@@ -108,7 +125,6 @@ int main()
 
 	// std::cout << merkol::is_my_iterator_tagged<merkol::input_iterator_tag>::value << std::endl;
 	// std::cout << merkol::is_my_iterator_tagged<std::input_iterator_tag>::value << std::endl;
-
 
 
 	// std::cout << typeid(std::iterator_traits<std::vector<int>::iterator>::iterator_category).name() << std::endl;
