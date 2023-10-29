@@ -99,38 +99,38 @@ namespace merkol
 	};
 	
 	// non-member relational operators overload
-	template <typename T>
-	inline bool operator==(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator==(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() == rhs.base());
 	}
 
-	template <typename T>
-	inline bool operator!=(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator!=(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() != rhs.base());
 	}
 
-	template <typename T>
-	inline bool operator<=(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator<=(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() <= rhs.base());
 	}
 
-	template <typename T>
-	inline bool operator>=(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator>=(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() >= rhs.base());
 	}
 
-	template <typename T>
-	inline bool operator<(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator<(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() < rhs.base());
 	}
 	
-	template <typename T>
-	inline bool operator>(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs)
+	template <typename Iterator1, typename Iterator2>
+	inline bool operator>(const random_access_iterator<Iterator1>& lhs, const random_access_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() > rhs.base());
 	}

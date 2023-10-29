@@ -66,18 +66,28 @@ void	iterator_traits_test()
     std::cout << "Reference Type: " << typeid(reference).name() << std::endl;
 }
 
+class deneme
+{
+public:
+	int zaa;
+};
+
 
 void vector_iter_test() {
 	int *ptr = new int();
 	merkol::random_access_iterator<int> it1(ptr);
 	merkol::random_access_iterator<int> it2;
 
+	
 	std::vector<int> vec;
 	std::vector<int> vec1;
 
-	std::cout << (vec == vec1) << std::endl;
+	std::cout << (it1 == it2) << std::endl;
 
-	std::vector<int>::iterator it = vec.begin();
+	std::vector<int>::iterator it4 = vec.begin();
+	std::vector<int>::iterator it3 = vec1.begin();
+	
+	std::cout << (it4 == it3) << std::endl;
 
 	std::cout << it1.base() << "      " << it2.base() << std::endl;
 	if (it2.base() == nullptr) {
@@ -89,9 +99,12 @@ void vector_iter_test() {
 		printValue("içerdema");
 	}
 
-	if (it1 > it2)
-		std::cout << "operator>" << std::endl;
+	if (it1 == it2)
+		std::cout << "operator==" << std::endl;
 }
+
+#include <stdlib.h>
+#include <unistd.h>
 
 int main()
 {

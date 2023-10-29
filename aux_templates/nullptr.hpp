@@ -15,11 +15,15 @@ namespace merkol
 	public: // default Access Specifier for struct is public
 		// For conversion to any type of null non-member pointer.
 		template<class T>
-		operator T*() const { return (0); }
+		operator T*() const { 
+			std::cout << typeid(T).name() << " operatorT*" << std::endl;
+			return (0); }
 
 		// For conversion to any type of null member pointer.
 		template<class C, class T>
-		operator T C::*() const { return (0); }
+		operator T C::*() const { 
+			std::cout << typeid(T).name() << " operatorC::T*" << std::endl;
+			return (0); }
 	private:
 		// It's impossible to get an adress of a nullptr
 		void operator&() const {}
