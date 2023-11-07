@@ -4,6 +4,8 @@
 #include <memory>
 #include <iostream>
 #include <utility>
+#include "../iterators/random_access_iterator.hpp"
+#include "../iterators/reverse_iterator.hpp"
 
 namespace merkol
 {
@@ -72,47 +74,6 @@ namespace merkol
 		T*		doAllocate(size_type n);
 		void	doFree(T* p, size_type n);
 	}; // vectorBase
-	
-
-	/**
-	 * @brief vector
-	 * Implements a dynamic array.
-	 * 
-	 * @tparam T value type
-	 * @tparam Allocator allocator type
-	 */
-	template <typename T, typename Allocator = std::allocator<T> >
-	class vector : public vectorBase<T, Allocator>
-	{
-		typedef	vectorBase<T, Allocator>	base_type;
-		typedef	vector<T, Allocator>		this_type;
-	
-	// protected: std >= c++11 
-	// 	using base_type::mpBegin;
-	// 	using base_type::mpEnd;
-	// 	using base_type::mCapacityAllocator;
-	// 	using base_type::DoAllocate;
-	// 	using base_type::DoFree;
-	// 	using base_type::internalCapacityPtr;
-	// 	using base_type::internalAllocator;
-	public:
-		typedef T														value_type;
-		typedef T*														pointer;
-		typedef const T*												const_pointer;
-		typedef T&														referance;
-		typedef const T&												const_referance;
-		// after iterator implementation
-		// typedef merkol::random_access_iterator<value_type>				iterator;
-		// typedef const merkol::random_access_iterator<const value_type>	const_iterator;
-		// typedef merkol::reverse_iterator<iterator>						reverse_iterator;
-		// typedef const merkol::reverse_iterator<const_iterator>			const_reverse_iterator;
-		typedef typename base_type::size_type							size_type;
-		typedef typename base_type::difference_type						difference_type;
-		typedef typename base_type::allocator_type						allocator_type; // || tt Allocator allocator_type;
-	};
-
-
-
 
 
 	///////////////////////////////////////////////////////////////////////
@@ -206,6 +167,45 @@ namespace merkol
 	///////////////////////////////////////////////////////////////////////
 	// VectorBase.imp.end();											///
 	///////////////////////////////////////////////////////////////////////
+	
+
+	/**
+	 * @brief vector
+	 * Implements a dynamic array.
+	 * 
+	 * @tparam T value type
+	 * @tparam Allocator allocator type
+	 */
+	template <typename T, typename Allocator = std::allocator<T> >
+	class vector : public vectorBase<T, Allocator>
+	{
+		typedef	vectorBase<T, Allocator>	base_type;
+		typedef	vector<T, Allocator>		this_type;
+	
+	// protected: std >= c++11 
+	// 	using base_type::mpBegin;
+	// 	using base_type::mpEnd;
+	// 	using base_type::mCapacityAllocator;
+	// 	using base_type::DoAllocate;
+	// 	using base_type::DoFree;
+	// 	using base_type::internalCapacityPtr;
+	// 	using base_type::internalAllocator;
+	public:
+		typedef T														value_type;
+		typedef T*														pointer;
+		typedef const T*												const_pointer;
+		typedef T&														referance;
+		typedef const T&												const_referance;
+		typedef merkol::random_access_iterator<value_type>				iterator;
+		typedef const merkol::random_access_iterator<const value_type>	const_iterator;
+		typedef merkol::reverse_iterator<iterator>						reverse_iterator;
+		typedef const merkol::reverse_iterator<const_iterator>			const_reverse_iterator;
+		typedef typename base_type::size_type							size_type;
+		typedef typename base_type::difference_type						difference_type;
+		typedef typename base_type::allocator_type						allocator_type; // || tt Allocator allocator_type;
+	};
+
+
 } // namespace merkol
 
 
