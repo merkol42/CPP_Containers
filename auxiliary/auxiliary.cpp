@@ -5,7 +5,7 @@ void print_instructions(std::string instruction)
 	std::cout << L_GRAY << instruction << RESET << std::endl;
 }
 
-void print_title(std::string title)
+void print_title(std::string title = "default title")
 {
 	std::cout << CYAN << "\n*******" << title << "*******\n" RESET << std::endl;
 }

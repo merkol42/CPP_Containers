@@ -126,20 +126,38 @@ void random_access_iterator_compare_test() {
 }
 
 void reverse_iterator_test() {
-	merkol::reverse_iterator<int> ri1(42);
-	merkol::reverse_iterator<double> ri2(3.14);
+	// std::reverse_iterator<int*> deneme;
+	int * ptr = new int();
+	std::cout << ptr << std::endl;
+	std::reverse_iterator<char*> za((nullptr));
+	merkol::reverse_iterator<char*> ri1((nullptr));
+	// std::cout << "std:base "<< za.base() << std::endl;
+	// std::cout << "merkol:base "<< ri1.base() << std::endl;
+	// std::reverse_iterator<int*> deneme = 2 + za;
+	// merkol::reverse_iterator<int*> ri3 = 2 + ri1; // Şablon yapıcı fonksiyonu ile dönüşüm yapılıyor
 
-	merkol::reverse_iterator<int> ri3 = 2 + ri1; // Şablon yapıcı fonksiyonu ile dönüşüm yapılıyor
+	// std::cout << "after std:base "<< deneme.base() << std::endl;
+	// std::cout << "after merkol:base "<< ri3.base() << std::endl;
 
 	// std::cout << "ri1.base() = " << ri1.base() << std::endl;
 	// std::cout << "ri2.base() = " << ri2.base() << std::endl;
 	// std::cout << "ri3.base() = " << ri3.base() << std::endl;
 }
 
+void vector_test() {
+	// merkol::vector<int> vec1(std::allocator<int>());
+	int val();
+	std::cout << val << std::endl;
+}
+
+
 int main()
 {
+	print_title();
+	vector_test();
+	// reverse_iterator_test();
 	// vector_iter_test();
-	random_access_iterator_compare_test();
+	// random_access_iterator_compare_test();
 	// typeid(merkol::iterator_traits<decltype(it)>::value_type).name();
 
 	// iterator_traits_test();

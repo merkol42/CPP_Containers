@@ -26,16 +26,16 @@ namespace merkol
 		typedef typename traits_type::reference					reference;
 	public:
 		reverse_iterator() : mIterator() { std::cout << "merkol::reverse_iterator::default_constructor" << std::endl; } // It's important that we construct mIterator, because if Iterator is a pointer, there's a difference between doing it and not.
-		explicit reverse_iterator(iterator_type i) : mIterator(i) { std::cout << "merkol::reverse_iterator::iterator_constrcutor" << std::endl; }
+		explicit reverse_iterator(iterator_type i) : mIterator(i) { std::cout << typeid(value_type).name() << std::endl; }
 		reverse_iterator(const reverse_iterator& ri) : mIterator(ri.mIterator) { std::cout << "merkol::reverse_iterator::copy_constrcutor" << std::endl; }
 
-		template<typedef U>
+		template<typename U>
 		reverse_iterator(const reverse_iterator<U>& ri) : mIterator(ri.base()) { }
 
-		template<typedef U> // try return type reverse_iterator<Iterator>& whats the diff
+		template<typename U> // try return type reverse_iterator<Iterator>& whats the diff
 		reverse_iterator& operator=(const reverse_iterator<U>& other)
 			{ mIterator = other.base(); return (*this);
-				std::cout << "merkol::reverse_iterator::coopy_assignment_operator=" << std::endl; }
+				std::cout << "merkol::reverse_iterator::copy_assignment_operator=" << std::endl; }
 
 		iterator_type base() const
 			{ return mIterator; }

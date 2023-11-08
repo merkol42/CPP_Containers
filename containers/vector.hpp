@@ -203,8 +203,141 @@ namespace merkol
 		typedef typename base_type::size_type							size_type;
 		typedef typename base_type::difference_type						difference_type;
 		typedef typename base_type::allocator_type						allocator_type; // || tt Allocator allocator_type;
+	
+	public:
+		// Constructors
+		vector() { }
+		explicit vector(const Allocator& alloc);
+		explicit vector(size_type count, const value_type& val = value_type(), const Allocator& alloc = Allocator());
+		vector(const this_type& other);
+		
+		// note: this has pre-C++11 semantics:
+		// this constructor is equivalent to the constructor vector(static_cast<size_type>(first), static_cast<value_type>(last), allocator) if InputIterator is an integral type.
+		// SFINAE Required
+		template<typename InputIterator>
+		vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
+		
+		~vector();
+
+		// Copy assignment operator
+		this_type&	operator=(const this_type& other);
+		
+		//base_type->get_allocator();
+		
+		void	assign(size_type n, const value_type& value);
+
+		template<typename InputIterator> //SFINAE Required
+		void	assign(InputIterator first, InputIterator last);
+
+		// Iterators
+		iterator		begin();
+		const_iterator	begin() const;
+
+		iterator		end();
+		const_iterator	end() const;
+
+		reverse_iterator		rbegin();
+		const_reverse_iterator	rbegin() const;
+
+		reverse_iterator		rend();
+		const_reverse_iterator	rend() const;
+
+		// Element access
+		pointer			data();
+		const_pointer	data() const;
+
+		reference		at(size_type n);
+		const_reference	at(size_type n) const;
+
+		reference		front();
+		const_reference	front() const;
+
+		reference		back();
+		const_reference	back() const;
+
+		reference		operator[](size_type n);
+		const_reference	operator[](size_type n) const;
+
+		// Capacity
+		bool		empty() const;
+		size_type	size() const;
+		size_type	capacity() const;
+		void		reserve(size_type n);
+		//base_type->max_size();
+
+		// Modifiers
+		void		clear();
+		iterator	insert(const_iterator pos, const T& value);
+		iterator	insert(const_iterator pos, size_type count, const T& value);
+
+		// note: this has pre-C++11 semantics:
+		// this function is equivalent to insert(const_iterator position, static_cast<size_type>(first), static_cast<value_type>(last)) if InputIterator is an integral type.
+		// ie. same as insert(const_iterator position, size_type n, const value_type& value)
+		template<typename InputIterator> // SFINAE Required
+		iterator	insert(const_iterator pos, InputIterator first, InputIterator last);
+
+		iterator	erase(iterator pos);
+		iterator	erase(iterator first, iterator last);
+
+		void		push_back(const value_type& val);
+		void		pop_back(void);
+
+		void		resize(size_type count);
+		void		resize(size_type count, const value_type& value);
+
+		void		swap(vector& other);
 	};
 
+	///////////////////////////////////////////////////////////////////////
+	// non-member relational operators overload(vector global operators)///
+	///////////////////////////////////////////////////////////////////////
+	template<typename T, typename Allocator>
+	inline bool
+	operator==(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		// return ((a.size() == b.size()) && merkol::equal(a.begin(), a.end(), b.begin()));
+	}
+
+	template<typename T, typename Allocator>
+	inline bool
+	operator!=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		// return ((a.size() == b.size()) && !merkol::equal(a.begin(), a.end(), b.begin()));
+	}
+
+	template<typename T, typename Allocator>
+	inline bool
+	operator<(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		//return merkol::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+	}
+
+	template<typename T, typename Allocator>
+	inline bool
+	operator>(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		// return b < a;
+	}
+
+	template<typename T, typename Allocator>
+	inline bool
+	operator<=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		// return !(b < a)
+	}
+
+	template<typename T, typename Allocator>
+	inline bool
+	operator>=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
+	{
+		// return !(a < b)
+	}
+
+	template <typename T, typename Allocator>
+	inline void swap(vector<T, Allocator>& a, vector<T, Allocator>& b)
+	{
+		// a.swap(b);
+	}
 
 } // namespace merkol
 
