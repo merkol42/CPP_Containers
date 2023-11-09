@@ -144,16 +144,16 @@ void reverse_iterator_test() {
 	// std::cout << "ri3.base() = " << ri3.base() << std::endl;
 }
 
+#include "../aux_templates/algorithm.hpp"
+
 void vector_test() {
-	// merkol::vector<int> vec1(std::allocator<int>());
-	int val();
-	std::cout << val << std::endl;
+	merkol::vector<int> vec1;
+	std::vector<int> s_vec(10);
 }
 
 
 int main()
 {
-	print_title();
 	vector_test();
 	// reverse_iterator_test();
 	// vector_iter_test();

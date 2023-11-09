@@ -1,11 +1,11 @@
 #include "auxiliary.hpp"
 
-void print_instructions(std::string instruction)
+void print_info(std::string info)
 {
-	std::cout << L_GRAY << instruction << RESET << std::endl;
+	std::cout << YELLOW << info << RESET << std::endl;
 }
 
-void print_title(std::string title = "default title")
+void print_title(std::string title)
 {
 	std::cout << CYAN << "\n*******" << title << "*******\n" RESET << std::endl;
 }

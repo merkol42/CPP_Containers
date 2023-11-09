@@ -6,6 +6,7 @@
 #include <utility>
 #include "../iterators/random_access_iterator.hpp"
 #include "../iterators/reverse_iterator.hpp"
+#include "../auxiliary/auxiliary.hpp"
 
 namespace merkol
 {
@@ -181,7 +182,6 @@ namespace merkol
 	{
 		typedef	vectorBase<T, Allocator>	base_type;
 		typedef	vector<T, Allocator>		this_type;
-	
 	// protected: std >= c++11 
 	// 	using base_type::mpBegin;
 	// 	using base_type::mpEnd;
@@ -194,8 +194,8 @@ namespace merkol
 		typedef T														value_type;
 		typedef T*														pointer;
 		typedef const T*												const_pointer;
-		typedef T&														referance;
-		typedef const T&												const_referance;
+		typedef T&														reference;
+		typedef const T&												const_reference;
 		typedef merkol::random_access_iterator<value_type>				iterator;
 		typedef const merkol::random_access_iterator<const value_type>	const_iterator;
 		typedef merkol::reverse_iterator<iterator>						reverse_iterator;
@@ -206,7 +206,7 @@ namespace merkol
 	
 	public:
 		// Constructors
-		vector() { }
+		vector();
 		explicit vector(const Allocator& alloc);
 		explicit vector(size_type count, const value_type& val = value_type(), const Allocator& alloc = Allocator());
 		vector(const this_type& other);
@@ -217,7 +217,7 @@ namespace merkol
 		template<typename InputIterator>
 		vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 		
-		~vector();
+		~vector(){}
 
 		// Copy assignment operator
 		this_type&	operator=(const this_type& other);
@@ -288,6 +288,36 @@ namespace merkol
 		void		swap(vector& other);
 	};
 
+	template<typename T, typename Allocator>
+	inline merkol::vector<T, Allocator>::vector() : base_type()
+	{
+		print_info("vector::default_constructor");
+		// Empty
+	}
+
+	template<typename T, typename Allocator>
+	inline merkol::vector<T, Allocator>::vector(const Allocator& alloc) : base_type(alloc)
+	{
+		print_info("vector::allocator_constructor");
+	}
+
+	// template<typename T, typename Allocator>
+	// inline merkol::vector<T, Allocator>::vector(size_type count, const value_type& val = value_type(), const Allocator& alloc = Allocator())
+	// {
+		
+	// }
+	
+	
+	// vector(const this_type& other);
+	
+	// // note: this has pre-C++11 semantics:
+	// // this constructor is equivalent to the constructor vector(static_cast<size_type>(first), static_cast<value_type>(last), allocator) if InputIterator is an integral type.
+	// // SFINAE Required
+	// template<typename InputIterator>
+	// vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
+	
+	// ~vector();
+
 	///////////////////////////////////////////////////////////////////////
 	// non-member relational operators overload(vector global operators)///
 	///////////////////////////////////////////////////////////////////////
@@ -296,6 +326,8 @@ namespace merkol
 	operator==(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		// return ((a.size() == b.size()) && merkol::equal(a.begin(), a.end(), b.begin()));
+		return 0;
+
 	}
 
 	template<typename T, typename Allocator>
@@ -303,6 +335,7 @@ namespace merkol
 	operator!=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		// return ((a.size() == b.size()) && !merkol::equal(a.begin(), a.end(), b.begin()));
+		return 0;
 	}
 
 	template<typename T, typename Allocator>
@@ -310,6 +343,8 @@ namespace merkol
 	operator<(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		//return merkol::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+		return 0;
+
 	}
 
 	template<typename T, typename Allocator>
@@ -317,6 +352,8 @@ namespace merkol
 	operator>(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		// return b < a;
+		return 0;
+
 	}
 
 	template<typename T, typename Allocator>
@@ -324,6 +361,8 @@ namespace merkol
 	operator<=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		// return !(b < a)
+		return 0;
+
 	}
 
 	template<typename T, typename Allocator>
@@ -331,6 +370,8 @@ namespace merkol
 	operator>=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
 		// return !(a < b)
+		return 0;
+
 	}
 
 	template <typename T, typename Allocator>
