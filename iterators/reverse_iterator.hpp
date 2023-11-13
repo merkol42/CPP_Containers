@@ -40,7 +40,7 @@ namespace merkol
 		iterator_type base() const
 			{ return mIterator; }
 		
-		reference operator*() const
+		reference operator*() const // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=51823
 		{
 			iterator_type tmp(mIterator);
 			return *--tmp;
