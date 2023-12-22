@@ -35,9 +35,11 @@
 // }
 
 #include "../iterators/random_access_iterator.hpp"
+#include "../iterators/random_access_iterator.hpp"
 #include "../iterators/iterator_traits.hpp"
 #include "../aux_templates/nullptr.hpp"
 #include "../iterators/iterator.hpp"
+#include "../iterators/reverse_iterator.hpp"
 #include <typeinfo>
 #include <cstddef>
 #include <typeinfo>
@@ -70,6 +72,8 @@ void vector_iter_test() {
 	int *ptr = new int();
 	merkol::random_access_iterator<int> it1(ptr);
 	merkol::random_access_iterator<int> it2;
+	merkol::random_access_iterator<int> it1(ptr);
+	merkol::random_access_iterator<int> it2;
 
 	
 	std::vector<int> vec;
@@ -89,7 +93,7 @@ void vector_iter_test() {
 
 	if (ptr != nullptr)
 	{
-		printValue("içerdema");
+		printValue("nullptr test");
 	}
 
 	if (it1 == it2)
@@ -97,10 +101,15 @@ void vector_iter_test() {
 }
 
 void random_access_iterator_compare_test() {
+void random_access_iterator_compare_test() {
 	int val = 169090600;
 	char *ptr = reinterpret_cast<char*>(&val);
 	
 
+	merkol::random_access_iterator<char> x(reinterpret_cast<char*>(ptr++));
+	merkol::random_access_iterator<char> y(reinterpret_cast<char*>(ptr++));
+	merkol::random_access_iterator<char> z(reinterpret_cast<char*>(ptr++));
+	merkol::random_access_iterator<char> t(reinterpret_cast<char*>(ptr));
 	merkol::random_access_iterator<char> x(reinterpret_cast<char*>(ptr++));
 	merkol::random_access_iterator<char> y(reinterpret_cast<char*>(ptr++));
 	merkol::random_access_iterator<char> z(reinterpret_cast<char*>(ptr++));
@@ -126,13 +135,41 @@ void random_access_iterator_compare_test() {
 	// 	;
 }
 
-#include <stdlib.h>
-#include <unistd.h>
+void reverse_iterator_test() {
+	// std::reverse_iterator<int*> deneme;
+	int * ptr = new int();
+	std::cout << ptr << std::endl;
+	std::reverse_iterator<char*> za((nullptr));
+	merkol::reverse_iterator<char*> ri1((nullptr));
+	// std::cout << "std:base "<< za.base() << std::endl;
+	// std::cout << "merkol:base "<< ri1.base() << std::endl;
+	// std::reverse_iterator<int*> deneme = 2 + za;
+	// merkol::reverse_iterator<int*> ri3 = 2 + ri1; // Şablon yapıcı fonksiyonu ile dönüşüm yapılıyor
+
+	// std::cout << "after std:base "<< deneme.base() << std::endl;
+	// std::cout << "after merkol:base "<< ri3.base() << std::endl;
+
+	// std::cout << "ri1.base() = " << ri1.base() << std::endl;
+	// std::cout << "ri2.base() = " << ri2.base() << std::endl;
+	// std::cout << "ri3.base() = " << ri3.base() << std::endl;
+}
+
+#include "../aux_templates/algorithm.hpp"
+
+void vector_test() {
+	merkol::vector<int> vec1;
+	std::vector<int> s_vec(10);
+}
+
 
 int main()
 {
 	// vector_iter_test();
 	random_access_iterator_compare_test();
+	vector_test();
+	// reverse_iterator_test();
+	// vector_iter_test();
+	// random_access_iterator_compare_test();
 	// typeid(merkol::iterator_traits<decltype(it)>::value_type).name();
 
 	// iterator_traits_test();
@@ -165,6 +202,7 @@ int main()
 
 
 	// std::cout << typeid(std::iterator_traits<std::vector<int>::iterator>::iterator_category).name() << std::endl;
+	// std::cout << typeid(merkol::iterator_traits<merkol::random_access_iterator<int> >::iterator_category).name() << std::endl;
 	// std::cout << typeid(merkol::iterator_traits<merkol::random_access_iterator<int> >::iterator_category).name() << std::endl;
 	// std::cout << "asdfasdfasdfasdfasdfasdf" << std::endl << "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf";
 	// std::this_thread::sleep_for(std::chrono::seconds(2));

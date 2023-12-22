@@ -10,7 +10,7 @@
 # define ORANGE			"\e[0;38;5;166m"
 # define RESET			"\e[0m"
 
-void	print_instructions(std::string instruction);
+void	print_info(std::string info);
 void	print_title(std::string title);
 void	print_subheading(std::string subheading);
 void	print_vector(const std::vector<int>& vec, char sep = ' ');
