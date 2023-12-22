@@ -35,7 +35,6 @@
 // }
 
 #include "../iterators/random_access_iterator.hpp"
-#include "../iterators/random_access_iterator.hpp"
 #include "../iterators/iterator_traits.hpp"
 #include "../aux_templates/nullptr.hpp"
 #include "../iterators/iterator.hpp"
@@ -72,8 +71,6 @@ void vector_iter_test() {
 	int *ptr = new int();
 	merkol::random_access_iterator<int> it1(ptr);
 	merkol::random_access_iterator<int> it2;
-	merkol::random_access_iterator<int> it1(ptr);
-	merkol::random_access_iterator<int> it2;
 
 	
 	std::vector<int> vec;
@@ -101,7 +98,6 @@ void vector_iter_test() {
 }
 
 void random_access_iterator_compare_test() {
-void random_access_iterator_compare_test() {
 	int val = 169090600;
 	char *ptr = reinterpret_cast<char*>(&val);
 	
@@ -110,29 +106,25 @@ void random_access_iterator_compare_test() {
 	merkol::random_access_iterator<char> y(reinterpret_cast<char*>(ptr++));
 	merkol::random_access_iterator<char> z(reinterpret_cast<char*>(ptr++));
 	merkol::random_access_iterator<char> t(reinterpret_cast<char*>(ptr));
-	merkol::random_access_iterator<char> x(reinterpret_cast<char*>(ptr++));
-	merkol::random_access_iterator<char> y(reinterpret_cast<char*>(ptr++));
-	merkol::random_access_iterator<char> z(reinterpret_cast<char*>(ptr++));
-	merkol::random_access_iterator<char> t(reinterpret_cast<char*>(ptr));
 	
 	const merkol::random_access_iterator<const char> n = x;
 	
 
-	// std::cout
-	// 	<< std::boolalpha
-	// 	<< "*x == " << (int)(*x) << '\n' // 40
-	// 	<< "*y == " << (int)(*y) << '\n' // 30
-	// 	<< "*z == " << (int)(*z) << '\n' // 20
-	// 	<< "*t == " << (int)(*t) << '\n' // 10
-	// 	<< "x == y ? " << (x == y) << '\n' // false
-	// 	<< "x != y ? " << (x != y) << '\n' // true
-	// 	<< "x <  y ? " << (x <  y) << '\n' // true
-	// 	<< "x <= y ? " << (x <= y) << '\n' // true
-	// 	<< "x == z ? " << (x == z) << '\n' // false
-	// 	<< "x != z ? " << (x != z) << '\n' // true
-	// 	<< "x <  z ? " << (x <  z) << '\n' // true
-	// 	<< "x <= z ? " << (x <= z) << '\n' // true
-	// 	;
+	std::cout
+		<< std::boolalpha
+		<< "*x == " << (int)(*x) << '\n' // 40
+		<< "*y == " << (int)(*y) << '\n' // 30
+		<< "*z == " << (int)(*z) << '\n' // 20
+		<< "*t == " << (int)(*t) << '\n' // 10
+		<< "x == y ? " << (x == y) << '\n' // false
+		<< "x != y ? " << (x != y) << '\n' // true
+		<< "x <  y ? " << (x <  y) << '\n' // true
+		<< "x <= y ? " << (x <= y) << '\n' // true
+		<< "x == z ? " << (x == z) << '\n' // false
+		<< "x != z ? " << (x != z) << '\n' // true
+		<< "x <  z ? " << (x <  z) << '\n' // true
+		<< "x <= z ? " << (x <= z) << '\n' // true
+		;
 }
 
 void reverse_iterator_test() {
