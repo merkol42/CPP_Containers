@@ -1,10 +1,11 @@
-#ifndef RANDOM_ACCESS_ITERATOR
-# define RANDOM_ACCESS_ITERATOR
+#ifndef RANDOM_ACCESS_ITERATOR_HPP
+# define RANDOM_ACCESS_ITERATOR_HPP
 
 //#include "iterator_traits.hpp"
 #include <cstddef> // std::ptrdiff_t
 #include "iterator.hpp"
 #include "../aux_templates/nullptr.hpp"
+#include "../auxiliary/information_printer.hpp"
 
 /**
  * // Forward iterator requirements
@@ -40,10 +41,10 @@ namespace merkol
 		pointer	mPointer;
 	public:
 		// constructors
-		random_access_iterator() : mPointer(nullptr) { std::cout << "merkol::random_access_iterator::default_constructor" << std::endl; };
-		explicit random_access_iterator(const pointer& ref) : mPointer(ref) { std::cout << "merkol::random_access_iterator::pointer_constructor" << std::endl; }; // avoid implicitly call
-		random_access_iterator(const random_access_iterator& instance) { *this = instance; /*       */std::cout << "merkol::random_access_iterator::copy_constructor" << std::endl; };
-		~random_access_iterator() { std::cout << "merkol::random_access_iterator::destructor" << std::endl; };
+		random_access_iterator() : mPointer(nullptr) { print_info("vector::random_access_iterator::default_constructor"); };
+		explicit random_access_iterator(const pointer& ref) : mPointer(ref) { print_info("vector::random_access_iterator::pointer_constructor"); }; // avoid implicitly call
+		random_access_iterator(const random_access_iterator& instance) { *this = instance; /*       */print_info("vector::random_access_iterator::copy_constructor"); };
+		~random_access_iterator() { print_info("vector::random_access_iterator::destructor"); };
 
 		// copy assignment
 		random_access_iterator& operator=(const random_access_iterator& rhs)

@@ -1,4 +1,4 @@
-#include "auxiliary.hpp"
+#include "information_printer.hpp"
 
 void print_info(std::string info)
 {

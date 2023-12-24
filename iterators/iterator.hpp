@@ -1,4 +1,4 @@
-#pragma once
+#pragma once // 'pragma once' can be more optimized against 'include' ?
 #include <cstddef>
 #include "iterator_traits.hpp"
 

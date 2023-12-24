@@ -1,5 +1,5 @@
-#ifndef ALGORITHM
-# define ALGORITHM
+#ifndef ALGORITHM_HPP
+# define ALGORITHM_HPP
 
 namespace merkol
 {

@@ -6,7 +6,8 @@
 #include <utility>
 #include "../iterators/random_access_iterator.hpp"
 #include "../iterators/reverse_iterator.hpp"
-#include "../auxiliary/auxiliary.hpp"
+#include "../auxiliary/information_printer.hpp"
+#include "../aux_templates/algorithm.hpp"
 
 namespace merkol
 {
@@ -217,7 +218,7 @@ namespace merkol
 		template<typename InputIterator>
 		vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 		
-		~vector(){}
+		~vector();
 
 		// Copy assignment operator
 		this_type&	operator=(const this_type& other);
@@ -316,7 +317,11 @@ namespace merkol
 	// template<typename InputIterator>
 	// vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 	
-	// ~vector();
+	template <typename T, typename Allocator>
+	merkol::vector<T, Allocator>::~vector()
+	{
+		print_info("merkol::vector::destructor");
+	}
 
 	///////////////////////////////////////////////////////////////////////
 	// non-member relational operators overload(vector global operators)///
@@ -325,7 +330,7 @@ namespace merkol
 	inline bool
 	operator==(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		// return ((a.size() == b.size()) && merkol::equal(a.begin(), a.end(), b.begin()));
+		return ((a.size() == b.size()) && merkol::equal(a.begin(), a.end(), b.begin()));
 		return 0;
 
 	}
@@ -334,7 +339,7 @@ namespace merkol
 	inline bool
 	operator!=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		// return ((a.size() == b.size()) && !merkol::equal(a.begin(), a.end(), b.begin()));
+		return ((a.size() == b.size()) && !merkol::equal(a.begin(), a.end(), b.begin()));
 		return 0;
 	}
 
@@ -342,7 +347,7 @@ namespace merkol
 	inline bool
 	operator<(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		//return merkol::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+		return merkol::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 		return 0;
 
 	}
@@ -351,7 +356,7 @@ namespace merkol
 	inline bool
 	operator>(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		// return b < a;
+		return (b < a);
 		return 0;
 
 	}
@@ -360,7 +365,7 @@ namespace merkol
 	inline bool
 	operator<=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		// return !(b < a)
+		return !(b < a);
 		return 0;
 
 	}
@@ -369,7 +374,7 @@ namespace merkol
 	inline bool
 	operator>=(const merkol::vector<T, Allocator>& a, const merkol::vector<T, Allocator>& b)
 	{
-		// return !(a < b)
+		return !(a < b);
 		return 0;
 
 	}
@@ -377,7 +382,7 @@ namespace merkol
 	template <typename T, typename Allocator>
 	inline void swap(vector<T, Allocator>& a, vector<T, Allocator>& b)
 	{
-		// a.swap(b);
+		a.swap(b);
 	}
 
 } // namespace merkol

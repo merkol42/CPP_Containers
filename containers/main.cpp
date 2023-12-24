@@ -8,7 +8,7 @@
 #include <memory>
 #include <algorithm>
 #include <string>
-#include "../auxiliary/auxiliary.hpp"
+#include "../auxiliary/information_printer.hpp"
 #include <string.h>
 #include <iomanip>
 #include <ios>
@@ -51,6 +51,7 @@ void	printValue(T val) {
 
 void	iterator_traits_test()
 {
+	print_title("iterator_traits_test()");
 	int arr[] = {1, 2, 3, 4, 5};
 	int* ptr = arr;
 	merkol::iterator_traits<int*>::value_type value;  // Değer türünü almak
@@ -68,6 +69,7 @@ void	iterator_traits_test()
 }
 
 void vector_iter_test() {
+	print_title("vector_iter_test()");
 	int *ptr = new int();
 	merkol::random_access_iterator<int> it1(ptr);
 	merkol::random_access_iterator<int> it2;
@@ -98,6 +100,7 @@ void vector_iter_test() {
 }
 
 void random_access_iterator_compare_test() {
+	print_title("random_access_iterator_compare_test()");
 	int val = 169090600;
 	char *ptr = reinterpret_cast<char*>(&val);
 	
@@ -129,6 +132,7 @@ void random_access_iterator_compare_test() {
 
 void reverse_iterator_test() {
 	// std::reverse_iterator<int*> deneme;
+	print_title("reverse_iterator_test()");
 	int * ptr = new int();
 	std::cout << ptr << std::endl;
 	std::reverse_iterator<char*> za((nullptr));
@@ -158,7 +162,8 @@ int main()
 {
 	// vector_iter_test();
 	random_access_iterator_compare_test();
-	vector_test();
+	// vector_test();
+	// vector_iter_test();
 	// reverse_iterator_test();
 	// vector_iter_test();
 	// random_access_iterator_compare_test();
