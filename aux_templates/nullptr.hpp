@@ -29,8 +29,8 @@ namespace merkol
 		void operator&() const {}
 		
 	};
+	#define noexcept throw()
 } // namespace merkol
-
 #define nullptr merkol::nullptr_t()
-#endif
-#endif
+	#endif // __cplusplus < 201103L
+#endif // NULL_PTR_HPP

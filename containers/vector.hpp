@@ -8,6 +8,12 @@
 #include "../iterators/reverse_iterator.hpp"
 #include "../auxiliary/information_printer.hpp"
 #include "../aux_templates/algorithm.hpp"
+#include "../aux_templates/utils.hpp"
+#include "../memory/memory.hpp"
+
+// for test
+// #include <chrono>
+// #include <thread>
 
 namespace merkol
 {
@@ -64,6 +70,7 @@ namespace merkol
 	public:
 		vectorBase();
 		vectorBase(const allocator_type& allocator);
+		//vectorBase(size_type n);
 		vectorBase(size_type n, const allocator_type& allocator);
 
 		~vectorBase();
@@ -89,6 +96,7 @@ namespace merkol
 		mpEnd(NULL),
 		mCapacityAllocator(NULL, Allocator())
 	{
+		// check_vector_assertion<T, Allocator>();
 	}
 
 	template<typename T, typename Allocator>
@@ -113,6 +121,8 @@ namespace merkol
 	template<typename T, typename Allocator>
 	inline vectorBase<T, Allocator>::~vectorBase()
 	{
+		print_info("merkol::vectorBase::destructor");
+		// std::this_thread::sleep_for(std::chrono::seconds(3));
 		if (mpBegin)
 			internalAllocator().deallocate(mpBegin, (internalCapacityPtr() - mpBegin) * sizeof(T));
 	}
@@ -144,7 +154,7 @@ namespace merkol
 			throw std::length_error("merkol::vector -- requested size exceeds max_size()");
 		if (n)
 		{
-			T*	ptr = internalAllocator().allocate(n * sizeof(T));
+			T*	ptr = (T*)internalAllocator().allocate(n * sizeof(T));
 			if (!ptr)
 				throw std::runtime_error("merkol::vector -- memory allocation failed");
 			return ptr;
@@ -208,8 +218,9 @@ namespace merkol
 	public:
 		// Constructors
 		vector();
-		explicit vector(const Allocator& alloc);
-		explicit vector(size_type count, const value_type& val = value_type(), const Allocator& alloc = Allocator());
+		explicit vector(const Allocator& alloc) M_NOEXCEPT;
+		explicit vector(size_type n, const allocator_type& allocator = Allocator());
+		vector(size_type n, const value_type& val, const Allocator& allocator = Allocator());
 		vector(const this_type& other);
 		
 		// note: this has pre-C++11 semantics:
@@ -231,21 +242,21 @@ namespace merkol
 		void	assign(InputIterator first, InputIterator last);
 
 		// Iterators
-		iterator		begin();
-		const_iterator	begin() const;
+		iterator		begin() M_NOEXCEPT;
+		const_iterator	begin() const M_NOEXCEPT;
 
-		iterator		end();
-		const_iterator	end() const;
+		iterator		end() M_NOEXCEPT;
+		const_iterator	end() const M_NOEXCEPT;
 
-		reverse_iterator		rbegin();
-		const_reverse_iterator	rbegin() const;
+		reverse_iterator		rbegin() M_NOEXCEPT;
+		const_reverse_iterator	rbegin() const M_NOEXCEPT;
 
-		reverse_iterator		rend();
-		const_reverse_iterator	rend() const;
+		reverse_iterator		rend() M_NOEXCEPT;
+		const_reverse_iterator	rend() const M_NOEXCEPT;
 
 		// Element access
-		pointer			data();
-		const_pointer	data() const;
+		pointer			data() M_NOEXCEPT;
+		const_pointer	data() const M_NOEXCEPT;
 
 		reference		at(size_type n);
 		const_reference	at(size_type n) const;
@@ -267,7 +278,7 @@ namespace merkol
 		//base_type->max_size();
 
 		// Modifiers
-		void		clear();
+		void		clear() M_NOEXCEPT;
 		iterator	insert(const_iterator pos, const T& value);
 		iterator	insert(const_iterator pos, size_type count, const T& value);
 
@@ -297,29 +308,50 @@ namespace merkol
 	}
 
 	template<typename T, typename Allocator>
-	inline merkol::vector<T, Allocator>::vector(const Allocator& alloc) : base_type(alloc)
+	inline merkol::vector<T, Allocator>::vector(const Allocator& alloc) M_NOEXCEPT
+	: base_type(alloc)
 	{
 		print_info("vector::allocator_constructor");
 	}
 
+	template<typename T, typename Allocator>
+	inline merkol::vector<T, Allocator>::vector(size_type n, const allocator_type& allocator)
+	: base_type(n, allocator)
+	{
+		merkol::uninitialized_value_construct_n(this->mpBegin, n);
+		this->mpEnd = this->mpBegin + n;
+	}
+
+
+	template<typename T, typename Allocator>
+	inline merkol::vector<T, Allocator>::vector(size_type n, const value_type& val, const Allocator& alloc)
+	: base_type(n, alloc)
+	{
+		std::cout << "int cons" << std::endl;
+		std::uninitialized_fill_n(this->mpBegin, n, val);
+		this->mpEnd = this->mpBegin + n;
+		for (size_type i = 0; i < n; i++)
+			std::cout << *this->mpBegin << std::endl;
+	}
+	
+	// note: this has pre-C++11 semantics:
+	// this constructor is equivalent to the constructor vector(static_cast<size_type>(first), static_cast<value_type>(last), allocator) if InputIterator is an integral type.
+	// SFINAE Required
 	// template<typename T, typename Allocator>
-	// inline merkol::vector<T, Allocator>::vector(size_type count, const value_type& val = value_type(), const Allocator& alloc = Allocator())
+	// template<typename InputIterator>
+	// inline merkol::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc,
+	// typename merkol::enable_if<!merkol::is_integral<InputIterator>::value, int>::type = 0)
+	// : base_type(alloc)
 	// {
-		
+	// 	std::cout << "Input iter cons" << std::endl;
 	// }
 	
-	
 	// vector(const this_type& other);
-	
-	// // note: this has pre-C++11 semantics:
-	// // this constructor is equivalent to the constructor vector(static_cast<size_type>(first), static_cast<value_type>(last), allocator) if InputIterator is an integral type.
-	// // SFINAE Required
-	// template<typename InputIterator>
-	// vector(InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 	
 	template <typename T, typename Allocator>
 	merkol::vector<T, Allocator>::~vector()
 	{
+		merkol::destruct(this->mpBegin, this->mpEnd);
 		print_info("merkol::vector::destructor");
 	}
 

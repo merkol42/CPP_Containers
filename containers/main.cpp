@@ -53,7 +53,7 @@ void	iterator_traits_test()
 {
 	print_title("iterator_traits_test()");
 	int arr[] = {1, 2, 3, 4, 5};
-	int* ptr = arr;
+	// int* ptr = arr;
 	merkol::iterator_traits<int*>::value_type value;  // Değer türünü almak
 	merkol::iterator_traits<int*>::difference_type diff; // Fark türünü almak
 	merkol::iterator_traits<int*>::iterator_category category; // Iterator kategorisini almak
@@ -151,17 +151,75 @@ void reverse_iterator_test() {
 }
 
 #include "../aux_templates/algorithm.hpp"
+#include "../aux_templates/utils.hpp"
+#include <memory>
+#include <unistd.h>
 
-void vector_test() {
-	merkol::vector<int> vec1;
-	std::vector<int> s_vec(10);
+class deneme
+{
+private:
+	int *ptr;
+public:
+	deneme();
+	deneme(const deneme& rhs);
+	~deneme();
+};
+
+deneme::deneme(const deneme& rhs)
+{
+	std::cout << "Kopya Kurucu çalıştırıldı : " << this << std::endl;
+	this->ptr = new int[10];
+	memcpy(ptr, rhs.ptr, 10 * sizeof(int));
 }
 
 
+deneme::deneme()
+{
+	std::cout << "Kurucu çalıştırıldı : " << this << std::endl;
+	ptr = new int[10];
+}
+
+deneme::~deneme()
+{
+	std::cout << "Yokedici çalıştırıldı : " << this << std::endl;
+	delete[] ptr;
+}
+
+
+
+void vector_test() {
+	// deneme d;
+	merkol::vector<int> vec1((unsigned int)2, 42);
+	// std::vector<int> s_vec(2, 42);
+	// print_vector(s_vec);
+	// s_vec.push_back(d);
+}
+
+#include "../memory/memory.hpp"
+#include <stdlib.h>
+
 int main()
 {
+	// int *ptr = (int*)malloc(sizeof(int) * 50);
+
+	// merkol::uninitialized_value_construct_n(ptr, 50);
+	// int i = 50;
+
+	// while (--i)
+	// {
+	// 	std::cout << *ptr << std::endl;
+	// }
+	
+	// free(ptr);
+
+	vector_test();
+
+
+
+
+	// merkol::check_vector_assertion<const int, std::allocator<int> >();
 	// vector_iter_test();
-	random_access_iterator_compare_test();
+	// random_access_iterator_compare_test();
 	// vector_test();
 	// vector_iter_test();
 	// reverse_iterator_test();
