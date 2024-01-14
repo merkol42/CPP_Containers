@@ -94,6 +94,30 @@ namespace merkol
 		: public valid_iterator_tag_res<true, merkol::output_iterator_tag> { };
 
 
+	template <typename _InputIterator>
+	inline typename iterator_traits<_InputIterator>::difference_type _distance(
+		_InputIterator first, _InputIterator last, merkol::input_iterator_tag)
+	{
+		typename iterator_traits<_InputIterator>::difference_type d(0);
+		for (; first != last; ++first) ++d;
+		return d;
+	}
+
+	template <typename _RandIterator>
+	inline typename iterator_traits<_RandIterator>::difference_type _distance(
+		_RandIterator first, _RandIterator last, merkol::random_access_iterator_tag)
+	{
+		return last - first;
+	}
+
+	template <typename _InputIterator>
+	inline typename iterator_traits<_InputIterator>::difference_type distance(
+		_InputIterator first, _InputIterator last)
+	{
+		return merkol::_distance(first, last, typename iterator_traits<_InputIterator>::iterator_category());
+	}
+
+
 	/**
 	 * Call when the iterator tested does not meet demand.
 	*/
