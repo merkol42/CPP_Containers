@@ -189,7 +189,17 @@ deneme::~deneme()
 
 void vector_test() {
 	// deneme d;
-	merkol::vector<int> vec1((unsigned int)2, 42);
+	merkol::vector<int> vec1(5, 32);
+	merkol::vector<int> vec2(50);
+	std::vector<int> vec3;
+
+	std::cout << vec3.empty() << std::endl;
+	std::cout << vec2.empty() << std::endl;
+	std::cout << vec1.empty() << std::endl;
+	
+
+	// std::cout << vec1.size() << std::endl;
+	// std::cout << vec2[2] << std::endl;
 	// std::vector<int> s_vec(2, 42);
 	// print_vector(s_vec);
 	// s_vec.push_back(d);
@@ -197,6 +207,11 @@ void vector_test() {
 
 #include "../memory/memory.hpp"
 #include <stdlib.h>
+
+
+void enable_if_test() {
+    std::cout << "enable_if\n";
+}
 
 int main()
 {
